@@ -96,6 +96,7 @@ def mark_game1():
     while True:
         if board[spot1] == "-":
             board[spot1] = "O"
+            check_win()
             break
         else:
             print()
@@ -108,6 +109,7 @@ def mark_game2():
     while True:
         if board[spot2] == "-":
             board[spot2] = "X"
+            check_win()
             break
         else:
             print()
@@ -119,21 +121,23 @@ def mark_game2():
 def check_win():
     #Check 3 in a row
     open = 0
-    if (board[0] == "O" and board[1] == "O" and board[2] == "O") or (board[3] == "O" and board[4] == "O" and board[5] == "O") or (board[6] == "O" and board[7] == "O" and board[8] == "O") or (board[0] == "O" and board[4] == "O" and board[8] == "O") or (board[2] == "O" and board[4] == "O" and board[6] == "O"):
+    if ((board[0] == "O" and board[1] == "O" and board[2] == "O") or (board[3] == "O" and board[4] == "O" and board[5] == "O") or (board[6] == "O" and board[7] == "O" and board[8] == "O") or (board[0] == "O" and board[4] == "O" and board[8] == "O") or (board[2] == "O" and board[4] == "O" and board[6] == "O") or (board[0] == "O" and board[3] == "O" and board[6] == "O") or (board[1] == "O" and board[4] == "O" and board[7] == "O") or (board[2] == "O" and board[5] == "O" and board[8] == "O")):
+        print()
         print("Player 1 wins!!!")
         print()
-        exit()
-    elif (board[0] == "X" and board[1] == "X" and board[2] == "X") or (board[3] == "X" and board[4] == "X" and board[5] == "X") or (board[6] == "X" and board[7] == "X" and board[8] == "X") or (board[0] == "X" and board[4] == "X" and board[8] == "X") or (board[2] == "X" and board[4] == "X" and board[6] == "X"):
+        play_again()
+    elif ((board[0] == "X" and board[1] == "X" and board[2] == "X") or (board[3] == "X" and board[4] == "X" and board[5] == "X") or (board[6] == "X" and board[7] == "X" and board[8] == "X") or (board[0] == "X" and board[4] == "X" and board[8] == "X") or (board[2] == "X" and board[4] == "X" and board[6] == "X") or (board[0] == "X" and board[3] == "X" and board[6] == "X") or (board[1] == "X" and board[4] == "X" and board[7] == "X") or (board[2] == "X" and board[5] == "X" and board[8] == "X")):
+        print()
         print("Player 2 wins!!!")
         print()
-        exit()
+        play_again()
     else:
         for i in range(0,9):
             if board[i] == "-":
                 open += 1
     if open == 0:
         print("It's a Tie!!!")
-        exit()
+        play_again()
 
 def play_again():
     print("Do you want to play again?")
@@ -149,9 +153,7 @@ while no_win:
     play_game1()
     mark_game1()
     display()
-    check_win()
     player2()
     play_game2()
     mark_game2()
     display()
-    check_win()
