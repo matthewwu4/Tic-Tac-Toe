@@ -1,14 +1,3 @@
-#board (Done)
-#display board (Done)
-#play game (Done)
-#handle turn (Done)
-#check win
-    #check rows
-    #check cols
-    #check diags
-#check tie
-#flip player
-
 board = ["-", "-", "-",
          "-", "-", "-",
          "-", "-", "-"]
@@ -20,21 +9,30 @@ def display():
     print("3  " + board[6] + " | " + board[7] + " | " + board[8])
     print()
 
+#Asks for player1's input
 def player1():
     print("Player 1")
     print("========")
     global player1_input
     player1_input = input("Enter your move (Row + Col): ")
 
+#Asks for player2's input
 def player2():
     print("Player 2")
     print("========")
     global player2_input
     player2_input = input("Enter your move (Row + Col): ")
 
+#Checks player1's input
 def play_game1():
     global spot1
     spot1 = 99
+
+    while player1_input == "":
+            print("Enter a valid move!")
+            display()
+            player1()
+
     while spot1 == 99:
         row1 = int(player1_input[0])
         col1 = int(player1_input[1])
@@ -62,9 +60,16 @@ def play_game1():
             print()
             player1()
 
+#Checks player2's input
 def play_game2():
     global spot2
     spot2 = 99
+
+    while player2_input == "":
+            print("Enter a valid move!")
+            display()
+            player2()
+
     while spot2 == 99:
         row2 = int(player2_input[0])
         col2 = int(player2_input[1])
@@ -92,35 +97,42 @@ def play_game2():
             print()
             player2()
 
+#Marks player1's input
 def mark_game1():
     while True:
         if board[spot1] == "-":
             board[spot1] = "O"
+            display()
             check_win()
             break
         else:
             print()
-            print("Invalid Move!")
+            print("Spot Already Taken!")
             print()
+            display()
             player1()
             play_game1()
 
+#Marks player2's input
 def mark_game2():
     while True:
         if board[spot2] == "-":
             board[spot2] = "X"
+            display()
             check_win()
             break
         else:
             print()
-            print("Invalid Move!")
+            print("Spot Already Taken!")
             print()
+            display()
             player2()
             play_game2()
 
+#Checks if any player wins
 def check_win():
-    #Check 3 in a row
     open = 0
+    #Check 3 in a row
     if ((board[0] == "O" and board[1] == "O" and board[2] == "O") or (board[3] == "O" and board[4] == "O" and board[5] == "O") or (board[6] == "O" and board[7] == "O" and board[8] == "O") or (board[0] == "O" and board[4] == "O" and board[8] == "O") or (board[2] == "O" and board[4] == "O" and board[6] == "O") or (board[0] == "O" and board[3] == "O" and board[6] == "O") or (board[1] == "O" and board[4] == "O" and board[7] == "O") or (board[2] == "O" and board[5] == "O" and board[8] == "O")):
         print()
         print("Player 1 wins!!!")
@@ -133,27 +145,47 @@ def check_win():
         play_again()
     else:
         for i in range(0,9):
-            if board[i] == "-":
+            if board[i] == "X" or board[i] == "O":
                 open += 1
-    if open == 0:
+    if open == 9:
         print("It's a Tie!!!")
+        print()
         play_again()
 
+#Asks users if they want to play again
 def play_again():
     print("Do you want to play again?")
     print("[1] Yes")
     print("[2] No")
-    user_input = input("Choice : ")
+    user_input = int(input("Choice : "))
 
-global no_win
-no_win = True
+    if user_input == 2:
+        print()
+        print("Have a great day!!!")
+        exit()
+    elif user_input == 1:
+        for i in range(0,9):
+            board[i] = "-"
+    else:
+        print()
+        print("Invalid Choice")
+        play_again()
+
+    if user_input == 1:
+        display()
+        while True:
+            player1()
+            play_game1()
+            mark_game1()
+            player2()
+            play_game2()
+            mark_game2()
+
 display()
-while no_win:
+while True:
     player1()
     play_game1()
     mark_game1()
-    display()
     player2()
     play_game2()
     mark_game2()
-    display()
